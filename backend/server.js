@@ -3,9 +3,16 @@ const Data = require('./Data.js')
 const mongoose = require('mongoose');
 const { users } = require('./Data.js');
 const  userRouter  = require('./routers/userRouter.js');
+const productRouter = require('./routers/productRouter.js');
+const dotenv = require('dotenv')
+
+
+dotenv.config()
 
 
 const app = express();
+app.use(express.json())
+app.use(express.urlencoded({extended : true}))
 const connection = mongoose.connection;
 mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost:27017/amazon', {
   useNewUrlParser: true,
@@ -18,20 +25,19 @@ connection.once("open", function() {
   console.log("MongoDB database connection established successfully");
 });
 
-app.get('/api/products/:id',(req,res) => {
-    const product = Data.products.find(x => x._id === req.params.id)
-    if(product) {
-        res.send(product)
-    } else {
-        res.status(404).send({
-            message: 'Product not found'
-        })
-    }
-})
+// app.get('/api/products/:id',(req,res) => {
+//     const product = Data.products.find(x => x._id === req.params.id)
+//     if(product) {
+//         res.send(product)
+//     } else {
+//         res.status(404).send({
+//             message: 'Product not found'
+//         })
+//     }
+// })
 
-app.get('/api/products', (req,res) => {
-    res.send(Data.products)
-})
+
+app.use('/api/products',productRouter)
 
 app.use('/api/users',userRouter)
 
