@@ -1,7 +1,7 @@
 const express = require('express');
 const Data = require('./Data.js')
 const mongoose = require('mongoose');
-const { users } = require('./Data.js');
+const users  = require('./Data.js');
 const  userRouter  = require('./routers/userRouter.js');
 const productRouter = require('./routers/productRouter.js');
 const dotenv = require('dotenv')
