@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const users  = require('./Data.js');
 const  userRouter  = require('./routers/userRouter.js');
 const productRouter = require('./routers/productRouter.js');
+const orderRouter = require('./routers/orderRouter.js')
 const dotenv = require('dotenv')
 
 
@@ -38,9 +39,8 @@ connection.once("open", function() {
 
 
 app.use('/api/products',productRouter)
-
+app.use('/api/orders',orderRouter)
 app.use('/api/users',userRouter)
-
 app.get('/',(req,res) => {
     res.send('Server is ready')
 });
